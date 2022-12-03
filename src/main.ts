@@ -1,10 +1,20 @@
 import { serve } from "https://deno.land/std@0.167.0/http/server.ts";
 import { wands } from "./wands.ts";
+import { json, url } from "./utils.ts";
 
-const headers = {
-  "content-type": "application/json",
-};
+function router(req: Request): Response {
+  const { pathname, search } = url(req);
+  switch (pathname) {
+    case "/wands":
+      return json(wands());
 
-const json = (data: unknown) => new Response(JSON.stringify(data), { headers });
+    default:
+      return new Response("not implemented", { status: 404 });
+  }
+}
 
-serve((req: Request) => json(wands())).catch((e) => console.log("Error", e));
+function errorHandler(e: Error) {
+  console.log("Error", e);
+}
+
+serve(router).catch(errorHandler);

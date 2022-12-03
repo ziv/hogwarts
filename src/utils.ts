@@ -8,8 +8,10 @@ export function qs(search: string) {
 
 const headers = {
   "content-type": "application/json",
-  "access-control-allow-origin": "*"
+  "access-control-allow-origin": "*",
 };
 
 export const json = (data: unknown) =>
   new Response(JSON.stringify(data), { headers });
+
+export const notFound = () => new Response("not implemented", { status: 404 });

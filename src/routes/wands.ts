@@ -10,7 +10,7 @@ const getFilter = (constrains: Constrains) => (item: Wand) =>
   constrains.every(([k, v]) => item[k] === v);
 
 const distinct = (key: keyof Wand) =>
-  json([...new Set(data().map((item) => item[key]))]);
+  json([...new Set(data().map((item) => item[key]))].sort());
 
 export function core(_: Request) {
   return distinct("core");

@@ -1,17 +1,25 @@
 export function url(req: Request) {
-  return new URL(req.url);
+    return new URL(req.url);
 }
 
-export function qs(search: string) {
-  return new URLSearchParams(search);
-}
+export const text = (data: string) => new Response(data, {
+    headers: {
+        "content-type": "text/plain",
+        "access-control-allow-origin": "*",
+    }
+});
 
-const headers = {
-  "content-type": "application/json",
-  "access-control-allow-origin": "*",
-};
+export const json = (data: unknown) => new Response(JSON.stringify(data), {
+    headers: {
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+    }
+});
 
-export const json = (data: unknown) =>
-  new Response(JSON.stringify(data), { headers });
-
-export const notFound = () => new Response("not implemented", { status: 404 });
+export const notFound = () => new Response("not implemented", {
+    status: 404,
+    headers: {
+        "content-type": "text/plain",
+        "access-control-allow-origin": "*",
+    }
+});
